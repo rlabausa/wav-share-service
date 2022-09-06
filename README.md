@@ -1,2 +1,2 @@
 # wav-share-service
-Back-end service for wav-share application
+Data service for wav-share application

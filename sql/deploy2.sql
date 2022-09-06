@@ -25,7 +25,7 @@ CREATE PROCEDURE GetAudioFiles
 	@sort_column varchar(50) = 'AudioFileId',
 	@sort_direction varchar(4) = 'ASC',
 	@search_file_id int = NULL,
-	@search_file_name varchar(255) = NULL,
+	@search_file_name varchar(100) = NULL,
 	@search_file_uploaded_by varchar(100) = NULL,
 	@ASC varchar(3) = 'ASC',
 	@DESC varchar(4) = 'DESC'
@@ -45,8 +45,7 @@ BEGIN
 	FROM
 		[dbo].[Audio_Files]
 	WHERE
-		1 = 1
-		AND [AudioFileId] = @search_file_id OR ISNULL(@search_file_id, '') = ''
+		[AudioFileId] = @search_file_id OR ISNULL(@search_file_id, '') = ''
 		AND [AudioFileName] LIKE '%' + @search_file_name + '%' OR ISNULL(@search_file_name, '') = ''
 		AND [UploadedBy] LIKE '%' + @search_file_uploaded_by + '%' OR ISNULL(@search_file_uploaded_by, '') = ''
 

@@ -11,7 +11,11 @@ namespace WavShareServiceModels.AudioFiles
     {
         public AudioFile()
         {
-
+            AudioFileId = -1;
+            AudioFileName = string.Empty;
+            EncodedAudio = string.Empty;
+            UploadedBy = string.Empty;
+            UploadDate = DateTime.UnixEpoch;
         }
 
         public AudioFile(int audioFileId, string audioFileName, string encodedAudio, string uploadedBy, DateTime uploadDate)

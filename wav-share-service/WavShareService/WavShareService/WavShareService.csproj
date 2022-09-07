@@ -4,11 +4,19 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>wav_share_service</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WavShareServiceBLL\WavShareServiceBLL.csproj" />
+    <ProjectReference Include="..\WavShareServiceDAL\WavShareServiceDAL.csproj" />
   </ItemGroup>
 
 </Project>

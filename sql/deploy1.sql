@@ -48,3 +48,4 @@ IF NOT EXISTS (SELECT * FROM [dbo].AUDIO_FILES)
             ('TEST19.wav', 'random-encoded-audio-19', 'user1'),
             ('TEST20.wav', 'random-encoded-audio-20', 'user2')
 	END
+GO

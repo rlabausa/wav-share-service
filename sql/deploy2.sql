@@ -1,7 +1,7 @@
 USE [WavShare]
 GO
 
-/****** Object:  StoredProcedure [dbo].[GetAudioFiles]    Script Date: 9/7/2022 9:44:38 AM ******/
+/****** Object:  StoredProcedure [dbo].[GetAudioFiles]    Script Date: 9/7/2022 9:53:56 AM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -45,8 +45,8 @@ BEGIN
 		[dbo].[Audio_Files]
 	WHERE
 		(ISNULL(@file_id, '') = '' OR [AudioFileId] = @file_id)
-		AND (ISNULL(@file_name, '') = '' OR AudioFileName LIKE '%' + @file_name + '%')
-		AND (ISNULL(@file_uploaded_by, '') = '' OR UploadedBy LIKE '%' + @file_uploaded_by + '%')
+		AND (ISNULL(@file_name, '') = '' OR [AudioFileName] LIKE '%' + @file_name + '%')
+		AND (ISNULL(@file_uploaded_by, '') = '' OR [UploadedBy] LIKE '%' + @file_uploaded_by + '%')
 
 	ORDER BY 
 		CASE WHEN @sort_column = 'AudioFileId' AND @sort_direction = @ASC THEN [AudioFileId] END ASC,

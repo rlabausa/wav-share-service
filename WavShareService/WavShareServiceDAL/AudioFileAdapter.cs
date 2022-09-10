@@ -35,7 +35,7 @@ namespace WavShareServiceDAL
                 {
                     cmd.Connection = connection;
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.CommandText = "GetTotalAudioFileCount";
+                    cmd.CommandText = "[dbo].[GetTotalAudioFileCount]";
 
                     if (requestParams != null)
                     {
@@ -84,7 +84,7 @@ namespace WavShareServiceDAL
                     {
                         cmd.Connection = connection;
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.CommandText = "GetAudioFiles";
+                        cmd.CommandText = "[dbo].[GetAudioFiles]";
 
                         if (requestParams != null)
                         {

@@ -38,5 +38,10 @@ namespace WavShareServiceBLL
             return await _audioFileAdapter.CreateAudioFile(requestBody);
         }
 
+        public async Task<bool> DeleteAudioFile(DeleteAudioFileRequest requestParams)
+        {
+            return await _audioFileAdapter.DeleteAudioFile(requestParams);
+        }
+
     }
 }

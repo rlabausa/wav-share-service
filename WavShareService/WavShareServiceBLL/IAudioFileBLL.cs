@@ -11,6 +11,7 @@ namespace WavShareServiceBLL
     {
         public Task<GetAudioFilesResponse> GetAudioFiles(GetAudioFilesRequest requestParams);
         public Task<int?> CreateAudioFile(CreateAudioFileRequest requestBody);
+        public Task<bool> DeleteAudioFile(DeleteAudioFileRequest requestParams);
 
     }
 }

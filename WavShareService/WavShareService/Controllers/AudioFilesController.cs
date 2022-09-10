@@ -36,7 +36,7 @@ namespace WavShareService.Controllers
                 return CreatedAtAction(nameof(Get), new { AudioFileId = newAudioFileId }, requestBody);
             } else
             {
-                //TODO: Customize error response
+                //TODO: Customize POST error response
                 return BadRequest();
             }
         }
@@ -48,9 +48,20 @@ namespace WavShareService.Controllers
         }
 
         // DELETE api/audiofiles
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete]
+        public async Task<ActionResult> Delete([FromQuery] DeleteAudioFileRequest requestParams)
         {
+            var deleteSuccessful = await _audioFileBLL.DeleteAudioFile(requestParams);
+
+            if (deleteSuccessful)
+            {
+                return NoContent();
+            } else
+            {
+                //TODO: Customize DELETE error response
+                return BadRequest();
+            }
+
         }
     }
 }

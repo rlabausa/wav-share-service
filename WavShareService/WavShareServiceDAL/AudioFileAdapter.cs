@@ -187,5 +187,30 @@ namespace WavShareServiceDAL
             return newAudioFileId;
         }
 
+        public async Task<bool> DeleteAudioFile(DeleteAudioFileRequest requestParams)
+        {
+            int rowsAffected = 0;
+
+            using (var connection = new SqlConnection(_dbConnString))
+            {
+                await connection.OpenAsync();
+
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.Connection = connection;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[DeleteAudioFile]";
+
+                    cmd.Parameters.AddWithValue("@audio_file_id", requestParams.AudioFileId);
+
+                    rowsAffected = await cmd.ExecuteNonQueryAsync();
+                }
+            }
+
+            bool success = rowsAffected >= 0;
+
+            return success;
+        }
+
     }
 }

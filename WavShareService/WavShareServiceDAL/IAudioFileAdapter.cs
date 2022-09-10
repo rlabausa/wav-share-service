@@ -10,5 +10,7 @@ namespace WavShareServiceDAL
     public interface IAudioFileAdapter
     {
         public Task<GetAudioFilesResponse> GetAudioFiles(GetAudioFilesRequest requestParams);
+
+        public Task<int?> CreateAudioFile(CreateAudioFileRequest requestBody);
     }
 }

@@ -156,5 +156,36 @@ namespace WavShareServiceDAL
             };
         }
 
+        public async Task<int?> CreateAudioFile(CreateAudioFileRequest requestBody)
+        {
+            int? newAudioFileId = null;
+
+            using (var connection = new SqlConnection(_dbConnString))
+            {
+                await connection.OpenAsync();
+
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.Connection = connection;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[CreateAudioFile]";
+
+                    cmd.Parameters.AddWithValue("@audio_file_name", requestBody.AudioFileName);
+                    cmd.Parameters.AddWithValue("@encoded_audio", requestBody.EncodedAudio);
+                    cmd.Parameters.AddWithValue("@uploaded_by", requestBody.UploadedBy);
+
+                    var returnVal = await cmd.ExecuteScalarAsync();
+
+                    if(returnVal != DBNull.Value)
+                    {
+                        newAudioFileId = Convert.ToInt32(returnVal);
+                    }
+
+                }
+            }
+
+            return newAudioFileId;
+        }
+
     }
 }

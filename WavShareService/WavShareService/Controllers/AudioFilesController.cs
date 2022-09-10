@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Mvc;
 using WavShareServiceBLL;
 using WavShareServiceModels.AudioFiles;
 
@@ -16,34 +17,37 @@ namespace WavShareService.Controllers
             _audioFileBLL = audioFileBLL;   
         }
 
-        // GET: api/<AudioFiles>
+        // GET: api/audiofiles
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AudioFile>>> Get([FromQuery] GetAudioFilesRequest requestParams)
         {
             var results = await _audioFileBLL.GetAudioFiles(requestParams);
             return Ok(results);
-        }
+        }       
 
-        // GET api/<AudioFiles>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<AudioFiles>
+        // POST api/audiofiles
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult> Post([FromBody] CreateAudioFileRequest requestBody)
         {
+            var newAudioFileId = await _audioFileBLL.CreateAudioFile(requestBody);
+
+            if (newAudioFileId.HasValue)
+            {
+                return CreatedAtAction(nameof(Get), new { AudioFileId = newAudioFileId }, requestBody);
+            } else
+            {
+                //TODO: Customize error response
+                return BadRequest();
+            }
         }
 
-        // PUT api/<AudioFiles>/5
+        // PUT api/audiofiles
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/<AudioFiles>/5
+        // DELETE api/audiofiles
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

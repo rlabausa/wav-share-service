@@ -2,10 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using WavShareServiceBLL.Validators;
 using WavShareServiceDAL;
 using WavShareServiceModels.AudioFiles;
+using WavShareServiceModels.Exceptions;
 
 namespace WavShareServiceBLL
 {
@@ -19,12 +22,20 @@ namespace WavShareServiceBLL
 
         public async Task<GetAudioFilesResponse> GetAudioFiles(GetAudioFilesRequest requestParams)
         {
-            if(requestParams != null)
-            {
-
-            }
-
             return await _audioFileAdapter.GetAudioFiles(requestParams);
+        }
+
+        public async Task<int?> CreateAudioFile(CreateAudioFileRequest requestBody)
+        {
+            //TODO: Implement BLL validation
+            //var validationMessage = AudioFileValidator.Validate(requestBody);
+
+            //if(!string.IsNullOrEmpty(validationMessage))
+            //{
+            //    throw new ServiceException(HttpStatusCode.BadRequest, validationMessage);
+            //}
+
+            return await _audioFileAdapter.CreateAudioFile(requestBody);
         }
 
     }

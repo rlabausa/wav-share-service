@@ -45,9 +45,9 @@ namespace WavShareService.Controllers
         [HttpPut]
         public async Task<ActionResult> Put([FromBody] UpdateAudioFileRequest requestBody)
         {
-            var editSuccessful = await _audioFileBLL.UpdateAudioFile(requestBody);
+            var updateSuccessful = await _audioFileBLL.UpdateAudioFile(requestBody);
 
-            if (editSuccessful)
+            if (updateSuccessful)
             {
                 return NoContent();
             } else

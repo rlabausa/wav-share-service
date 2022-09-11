@@ -13,6 +13,8 @@ namespace WavShareServiceDAL
 
         public Task<int?> CreateAudioFile(CreateAudioFileRequest requestBody);
 
+        public Task<bool> UpdateAudioFile(UpdateAudioFileRequest requestBody);
+
         public Task<bool> DeleteAudioFile(DeleteAudioFileRequest requestBody);
     }
 }

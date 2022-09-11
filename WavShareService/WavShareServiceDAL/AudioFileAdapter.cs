@@ -24,7 +24,7 @@ namespace WavShareServiceDAL
         }
 
         private async Task<int> GetTotalAudioFileCount(GetAudioFilesRequest requestParams)
-        
+
         {
             using (var connection = new SqlConnection(_dbConnString))
             {
@@ -176,7 +176,7 @@ namespace WavShareServiceDAL
 
                     var returnVal = await cmd.ExecuteScalarAsync();
 
-                    if(returnVal != DBNull.Value)
+                    if (returnVal != DBNull.Value)
                     {
                         newAudioFileId = Convert.ToInt32(returnVal);
                     }
@@ -185,6 +185,33 @@ namespace WavShareServiceDAL
             }
 
             return newAudioFileId;
+        }
+
+        public async Task<bool> UpdateAudioFile(UpdateAudioFileRequest requestBody)
+        {
+            int rowsAffected = 0;
+
+            using (var connection = new SqlConnection(_dbConnString))
+            {
+                await connection.OpenAsync();
+
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[UpdateAudioFile]";
+
+                    cmd.Parameters.AddWithValue("@audio_file_id", requestBody.AudioFileId);
+                    cmd.Parameters.AddWithValue("@audio_file_name", requestBody.AudioFileName);
+                    cmd.Parameters.AddWithValue("@encoded_audio", requestBody.EncodedAudio);
+                    cmd.Parameters.AddWithValue("@uploaded_by", requestBody.UploadedBy);
+
+                    rowsAffected = await cmd.ExecuteNonQueryAsync();
+                }
+            }
+
+            bool success = rowsAffected > 0;
+
+            return success;
         }
 
         public async Task<bool> DeleteAudioFile(DeleteAudioFileRequest requestParams)

@@ -42,9 +42,18 @@ namespace WavShareService.Controllers
         }
 
         // PUT api/audiofiles
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public async Task<ActionResult> Put([FromBody] UpdateAudioFileRequest requestBody)
         {
+            var editSuccessful = await _audioFileBLL.UpdateAudioFile(requestBody);
+
+            if (editSuccessful)
+            {
+                return NoContent();
+            } else
+            {
+                return NotFound();
+            }
         }
 
         // DELETE api/audiofiles

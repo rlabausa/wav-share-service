@@ -1,20 +1,27 @@
-﻿using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using WavShareServiceBLL;
 using WavShareServiceModels.AudioFiles;
+using WavShareServiceModels.Constants;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace WavShareService.Controllers
 {
+
+    [Produces(Mime.MediaTypes.Json)]
+    [Consumes(Mime.MediaTypes.Json)]
     [Route("api/[controller]")]
     [ApiController]
     public class AudioFilesController : ControllerBase
     {
         private IAudioFileBLL _audioFileBLL;
-        public AudioFilesController(IAudioFileBLL audioFileBLL)
+        private ILogger<AudioFilesController> _logger;
+
+        public AudioFilesController(IAudioFileBLL audioFileBLL, ILogger<AudioFilesController> logger)
         {
             _audioFileBLL = audioFileBLL;   
+            _logger = logger;
         }
 
         // GET: api/audiofiles
@@ -34,7 +41,8 @@ namespace WavShareService.Controllers
             if (newAudioFileId.HasValue)
             {
                 return CreatedAtAction(nameof(Get), new { AudioFileId = newAudioFileId }, requestBody);
-            } else
+            }
+            else
             {
                 //TODO: Customize POST error response
                 return BadRequest();
@@ -50,7 +58,8 @@ namespace WavShareService.Controllers
             if (updateSuccessful)
             {
                 return NoContent();
-            } else
+            }
+            else
             {
                 return NotFound();
             }
@@ -65,7 +74,8 @@ namespace WavShareService.Controllers
             if (deleteSuccessful)
             {
                 return NoContent();
-            } else
+            }
+            else
             {
                 //TODO: Customize DELETE error response
                 return BadRequest();

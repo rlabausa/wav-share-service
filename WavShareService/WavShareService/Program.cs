@@ -2,6 +2,7 @@ using WavShareServiceBLL;
 using WavShareServiceDAL;
 using Microsoft.Extensions.Logging;
 using WavShareService.Extensions;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,18 +15,16 @@ builder.Services.AddLogging((logging) =>
     logging.AddConfiguration(builder.Configuration);
 
 });
+
 builder.Services.AddRouting(opts =>
 {
     opts.LowercaseUrls = true;
 });
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(opts =>
-{
-    opts.DescribeAllParametersInCamelCase();
-});
-builder.Services.AddTransient<IAudioFileBLL, AudioFileBLL>();
-builder.Services.AddTransient<IAudioFileAdapter, AudioFileAdapter>();
+builder.Services.AddConfiguredSwaggerGen();
+builder.Services.AddTransientServices();
 
 var app = builder.Build();
 

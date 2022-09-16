@@ -3,36 +3,42 @@ using Microsoft.AspNetCore.Mvc;
 using WavShareServiceBLL;
 using WavShareServiceModels.AudioFiles;
 using WavShareServiceModels.Constants;
+using WavShareServiceModels.Exceptions;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace WavShareService.Controllers
 {
 
-    [Produces(Mime.MediaTypes.Json)]
-    [Consumes(Mime.MediaTypes.Json)]
-    [Route("api/[controller]")]
-    [ApiController]
-    public class AudioFilesController : ControllerBase
+    public class AudioFilesController : ApiControllerBase
     {
         private IAudioFileBLL _audioFileBLL;
         private ILogger<AudioFilesController> _logger;
 
         public AudioFilesController(IAudioFileBLL audioFileBLL, ILogger<AudioFilesController> logger)
         {
-            _audioFileBLL = audioFileBLL;   
+            _audioFileBLL = audioFileBLL;
             _logger = logger;
         }
 
-        // GET: api/audiofiles
+        /// <summary>
+        /// Retrieve audio files
+        /// </summary>
+        /// <param name="requestParams"></param>
+        /// <returns></returns>
+        /// <exception cref="ServiceException"></exception>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AudioFile>>> Get([FromQuery] GetAudioFilesRequest requestParams)
         {
             var results = await _audioFileBLL.GetAudioFiles(requestParams);
             return Ok(results);
-        }       
+        }
 
-        // POST api/audiofiles
+        /// <summary>
+        /// Create new audio file
+        /// </summary>
+        /// <param name="requestBody"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] CreateAudioFileRequest requestBody)
         {
@@ -49,7 +55,11 @@ namespace WavShareService.Controllers
             }
         }
 
-        // PUT api/audiofiles
+        /// <summary>
+        /// Update existing audio file
+        /// </summary>
+        /// <param name="requestBody"></param>
+        /// <returns></returns>
         [HttpPut]
         public async Task<ActionResult> Put([FromBody] UpdateAudioFileRequest requestBody)
         {
@@ -65,7 +75,11 @@ namespace WavShareService.Controllers
             }
         }
 
-        // DELETE api/audiofiles
+        /// <summary>
+        /// Delete existing audio file
+        /// </summary>
+        /// <param name="requestParams"></param>
+        /// <returns></returns>
         [HttpDelete]
         public async Task<ActionResult> Delete([FromQuery] DeleteAudioFileRequest requestParams)
         {

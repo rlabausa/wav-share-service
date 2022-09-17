@@ -32,7 +32,7 @@ namespace WavShareServiceBLL
 
             //if(!string.IsNullOrEmpty(validationMessage))
             //{
-            //    throw new ServiceException(HttpStatusCode.BadRequest, validationMessage);
+            //    throw new ApiException(HttpStatusCode.BadRequest, validationMessage);
             //}
 
             return await _audioFileAdapter.CreateAudioFile(requestBody);

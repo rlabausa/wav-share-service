@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 
 namespace WavShareServiceModels.Exceptions
 {
-    public class ServiceException : Exception
+    public class ApiException : Exception
     {
-        private const string _messagePrefix = "Service Exception:";
+        private static readonly string _messagePrefix = "Service Exception:";
         public int StatusCode { get; }
 
-        public ServiceException(int statusCode, string message) : base($"{_messagePrefix} {message}")
+        public ApiException(int statusCode, string message) : base($"{_messagePrefix} {message}")
         {
             StatusCode = statusCode;
         }
 
-        public ServiceException(HttpStatusCode statusCode, string message): base($"{_messagePrefix} {message}")
+        public ApiException(HttpStatusCode statusCode, string message): base($"{_messagePrefix} {message}")
         {
             StatusCode = (int)statusCode;
         }

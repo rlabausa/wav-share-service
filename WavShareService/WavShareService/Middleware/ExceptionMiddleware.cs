@@ -32,7 +32,7 @@ namespace WavShareService.Middleware
             {
                 await _next(httpContext);
             } 
-            catch(ServiceException exc)
+            catch(ApiException exc)
             {
                 caughtException = exc;
                 await HandleErrorResponse(httpContext, exc);
@@ -70,7 +70,7 @@ namespace WavShareService.Middleware
             }
         }
 
-        private Task HandleErrorResponse(HttpContext httpContext, ServiceException exc, DateTime? dateTime = null)
+        private Task HandleErrorResponse(HttpContext httpContext, ApiException exc, DateTime? dateTime = null)
         {
             httpContext.Response.StatusCode = exc.StatusCode;
             
@@ -78,6 +78,7 @@ namespace WavShareService.Middleware
             var errorResponse = new ApiErrorResponse() {
                 Status = exc.StatusCode, 
                 Message = exc.Message, 
+                Details = $"{exc.Message} {exc.StackTrace}",
                 TimeStamp = timeStamp
 
             }.ToString();
@@ -92,7 +93,8 @@ namespace WavShareService.Middleware
             var timeStamp = dateTime ?? DateTime.UtcNow;
             var errorResponse = new ApiErrorResponse() {
                 Status = context.Response.StatusCode, 
-                Message = $"ErrorCode: {exc.ErrorCode} - {exc.Message}", 
+                Message = ApiErrorResponse.GenericErrorMessage, 
+                Details = $"ErrorCode: {exc.ErrorCode} - {exc.Message}",
                 TimeStamp = timeStamp
             }.ToString();
 
@@ -107,7 +109,8 @@ namespace WavShareService.Middleware
             var errorResponse = new ApiErrorResponse()
             {
                 Status = context.Response.StatusCode,
-                Message = exc.Message,
+                Message = ApiErrorResponse.GenericErrorMessage,
+                Details = exc.Message,
                 TimeStamp = timeStamp
             }.ToString();
 

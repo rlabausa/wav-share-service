@@ -3,6 +3,7 @@ using WavShareServiceDAL;
 using Microsoft.Extensions.Logging;
 using WavShareService.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using WavShareServiceModels.ApiResponses;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +22,15 @@ builder.Services.AddRouting(opts =>
     opts.LowercaseUrls = true;
 });
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+                .ConfigureApiBehaviorOptions(opts =>
+                {
+                    opts.InvalidModelStateResponseFactory = actionContext =>
+                    {
+                        var modelState = actionContext.ModelState;
+                        return new ApiValidationErrorResult(modelState);
+                    };
+                });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddConfiguredSwaggerGen();
 builder.Services.AddTransientServices();

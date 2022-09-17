@@ -26,7 +26,7 @@ namespace WavShareService.Controllers
         /// </summary>
         /// <param name="requestParams"></param>
         /// <returns></returns>
-        /// <exception cref="ServiceException"></exception>
+        /// <exception cref="ApiException"></exception>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AudioFile>>> Get([FromQuery] GetAudioFilesRequest requestParams)
         {

@@ -13,7 +13,8 @@ namespace WavShareService.Extensions
         /// <returns><see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
         public static IServiceCollection AddConfiguredControllers(this IServiceCollection services)
         {
-            services.AddControllers()
+            services
+                .AddControllers()
                 .ConfigureApiBehaviorOptions(opts =>
                 {
                     opts.InvalidModelStateResponseFactory = actionContext =>

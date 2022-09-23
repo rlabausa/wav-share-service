@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace WavShareServiceModels.ApiResponses
@@ -8,7 +9,7 @@ namespace WavShareServiceModels.ApiResponses
         public ApiValidationErrorResult(ModelStateDictionary modelState) 
             : base (new ApiErrorResponse(modelState))
         {
-
+            StatusCode = StatusCodes.Status400BadRequest;
         }
     }
 }

@@ -14,15 +14,11 @@ namespace WavShareServiceModels.ApiRequests
 {
     public class ApiRequest
     {
-
-        [Required]
         [CorrelId]
         [FromHeader(Name = Header.ClientCorrelId)]
         [JsonPropertyName(Header.ClientCorrelId)]
         [Display(Order = 0)]
         [DefaultValue(ClientCorrelIdHeaderValue.Generate)]
         public string? ClientCorrelId { get; set; }
-
-
     }
 }

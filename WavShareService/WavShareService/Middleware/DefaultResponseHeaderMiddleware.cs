@@ -1,4 +1,5 @@
-﻿using WavShareServiceModels.Constants;
+﻿using Microsoft.Extensions.Primitives;
+using WavShareServiceModels.Constants;
 
 namespace WavShareService.Middleware
 {
@@ -14,6 +15,13 @@ namespace WavShareService.Middleware
         {
 
             httpContext.Response.ContentType = Mime.MediaTypes.Json;
+
+            StringValues guidOption;
+            httpContext.Request.Headers.TryGetValue(Header.ClientCorrelId, out guidOption);
+
+            string guid = guidOption == ClientCorrelIdHeaderValue.Generate ? Guid.NewGuid().ToString() : guidOption;
+
+            httpContext.Response.Headers.Add(Header.ClientCorrelId, guid);
 
             await _next(httpContext);
         }

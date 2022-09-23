@@ -2,6 +2,7 @@
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Text;
+using System.Text.Json;
 using WavShareServiceModels.ApiResponses;
 using WavShareServiceModels.Exceptions;
 using WavShareServiceModels.Logging;
@@ -63,16 +64,23 @@ namespace WavShareService.Middleware
 
                 _logger.LogError(record.ToString());
             }
-            else
+            else if(httpContext.Response.StatusCode >= StatusCodes.Status400BadRequest)
+            {
+                record.TraceLevel = TraceLevel.Error;
+
+                //TODO: Fix request body logging
+                record.Message = $"{httpContext.Response.StatusCode} - {httpContext.Response.Body}";
+                _logger.LogError(record.ToString());
+            } else
             {
                 record.TraceLevel = TraceLevel.Info;
                 _logger.LogInformation(record.ToString());
             }
         }
 
-        private Task HandleErrorResponse(HttpContext httpContext, ApiException exc, DateTime? dateTime = null)
+        private Task HandleErrorResponse(HttpContext context, ApiException exc, DateTime? dateTime = null)
         {
-            httpContext.Response.StatusCode = exc.StatusCode;
+            context.Response.StatusCode = exc.StatusCode;
             
             var timeStamp = dateTime ?? DateTime.UtcNow;
             var errorResponse = new ApiErrorResponse() {
@@ -83,7 +91,7 @@ namespace WavShareService.Middleware
 
             }.ToString();
 
-            return httpContext.Response.WriteAsync(errorResponse, Encoding.UTF8);
+            return context.Response.WriteAsync(errorResponse, Encoding.UTF8);
         }
 
         private Task HandleErrorResponse(HttpContext context, SqlException exc, DateTime? dateTime = null)

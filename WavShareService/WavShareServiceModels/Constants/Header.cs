@@ -10,4 +10,9 @@ namespace WavShareServiceModels.Constants
     {
         public const string ClientCorrelId = "client-correl-id";
     }
+
+    public static class ClientCorrelIdHeaderValue
+    {
+        public const string Generate = "generate";
+    }
 }

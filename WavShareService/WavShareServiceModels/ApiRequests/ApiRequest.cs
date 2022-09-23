@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using WavShareServiceModels.Constants;
+using WavShareServiceModels.ValidationAttributes;
 
 namespace WavShareServiceModels.ApiRequests
 {
@@ -15,10 +16,11 @@ namespace WavShareServiceModels.ApiRequests
     {
 
         [Required]
+        [CorrelId]
         [FromHeader(Name = Header.ClientCorrelId)]
         [JsonPropertyName(Header.ClientCorrelId)]
         [Display(Order = 0)]
-        [DefaultValue("generate")]
+        [DefaultValue(ClientCorrelIdHeaderValue.Generate)]
         public string? ClientCorrelId { get; set; }
 
 

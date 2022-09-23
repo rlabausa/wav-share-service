@@ -4,10 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WavShareServiceModels.ApiRequests;
 
 namespace WavShareServiceModels.AudioFiles
 {
-    public class CreateAudioFileRequest
+    public class CreateAudioFileRequest: ApiRequest
     {
         [Required]
         public string AudioFileName { get; set; }

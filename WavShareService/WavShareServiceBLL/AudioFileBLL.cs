@@ -27,19 +27,25 @@ namespace WavShareServiceBLL
 
         public async Task<int?> CreateAudioFile(CreateAudioFileRequest requestBody)
         {
-            //TODO: Implement BLL validation
-            //var validationMessage = AudioFileValidator.Validate(requestBody);
+            var validationMessage = AudioFileValidator.Validate(requestBody);
 
-            //if(!string.IsNullOrEmpty(validationMessage))
-            //{
-            //    throw new ApiException(HttpStatusCode.BadRequest, validationMessage);
-            //}
+            if (!string.IsNullOrEmpty(validationMessage))
+            {
+                throw new ApiException(HttpStatusCode.BadRequest, validationMessage);
+            }
 
             return await _audioFileAdapter.CreateAudioFile(requestBody);
         }
 
         public async Task<bool> UpdateAudioFile(UpdateAudioFileRequest requestBody)
         {
+            var validationMessage = AudioFileValidator.Validate(requestBody);
+
+            if (string.IsNullOrEmpty(validationMessage))
+            {
+                throw new ApiException(HttpStatusCode.BadRequest, validationMessage);
+            }
+
             return await _audioFileAdapter.UpdateAudioFile(requestBody);
         }
 

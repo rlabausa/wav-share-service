@@ -32,13 +32,13 @@ namespace WavShareService.Middleware
             try
             {
                 await _next(httpContext);
-            } 
-            catch(ApiException exc)
+            }
+            catch (ApiException exc)
             {
                 caughtException = exc;
                 await HandleErrorResponse(httpContext, exc);
             }
-            catch(SqlException exc)
+            catch (SqlException exc)
             {
                 caughtException = exc;
                 await HandleErrorResponse(httpContext, exc);
@@ -48,10 +48,11 @@ namespace WavShareService.Middleware
                 caughtException = exc;
                 await HandleErrorResponse(httpContext, exc);
             }
-            
+
             stopWatch.Stop();
 
-            LogRecord record = new LogRecord() { 
+            LogRecord record = new LogRecord()
+            {
                 StartTime = timeStamp,
                 ElapsedMilliseconds = stopWatch.ElapsedMilliseconds,
             };
@@ -64,14 +65,15 @@ namespace WavShareService.Middleware
 
                 _logger.LogError(record.ToString());
             }
-            else if(httpContext.Response.StatusCode >= StatusCodes.Status400BadRequest)
+            else if (httpContext.Response.StatusCode >= StatusCodes.Status400BadRequest)
             {
                 record.TraceLevel = TraceLevel.Error;
 
                 //TODO: Fix request body logging
                 record.Message = $"{httpContext.Response.StatusCode} - {httpContext.Response.Body}";
                 _logger.LogError(record.ToString());
-            } else
+            }
+            else
             {
                 record.TraceLevel = TraceLevel.Info;
                 _logger.LogInformation(record.ToString());
@@ -81,11 +83,12 @@ namespace WavShareService.Middleware
         private Task HandleErrorResponse(HttpContext context, ApiException exc, DateTime? dateTime = null)
         {
             context.Response.StatusCode = exc.StatusCode;
-            
+
             var timeStamp = dateTime ?? DateTime.UtcNow;
-            var errorResponse = new ApiErrorResponse() {
-                Status = exc.StatusCode, 
-                Message = exc.Message, 
+            var errorResponse = new ApiErrorResponse()
+            {
+                Status = exc.StatusCode,
+                Message = exc.Message,
                 Details = $"{exc.Message} {exc.StackTrace}",
                 TimeStamp = timeStamp
 
@@ -97,11 +100,12 @@ namespace WavShareService.Middleware
         private Task HandleErrorResponse(HttpContext context, SqlException exc, DateTime? dateTime = null)
         {
             context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-            
+
             var timeStamp = dateTime ?? DateTime.UtcNow;
-            var errorResponse = new ApiErrorResponse() {
-                Status = context.Response.StatusCode, 
-                Message = ApiErrorResponse.GenericErrorMessage, 
+            var errorResponse = new ApiErrorResponse()
+            {
+                Status = context.Response.StatusCode,
+                Message = ApiErrorResponse.GenericErrorMessage,
                 Details = $"ErrorCode: {exc.ErrorCode} - {exc.Message}",
                 TimeStamp = timeStamp
             }.ToString();

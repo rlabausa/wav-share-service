@@ -7,14 +7,8 @@ using WavShareServiceModels.AudioFiles;
 
 namespace WavShareUnitTest
 {
-    public class UnitTest1
+    public class AudioFilesControllerTest
     {
-        [Fact]
-        public void Test1()
-        {
-
-        }
-
         [Fact]
         public async Task GetAudioFileSuccess()
         {
@@ -31,7 +25,7 @@ namespace WavShareUnitTest
 
             // Assert
             Assert.IsType<ActionResult<IEnumerable<GetAudioFilesResponse>>>(result);
-
+            Assert.NotNull(result);
         }
     }
 }

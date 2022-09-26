@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WavShareServiceDAL", "WavSh
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WavShareServiceModels", "WavShareServiceModels\WavShareServiceModels.csproj", "{D7227CE6-6668-45DA-AD5C-1F2C61E99FAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{CA826390-CDB0-41C1-BC00-8C7F6A6EA1C8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WavShareUnitTest", "WavShareUnitTest\WavShareUnitTest.csproj", "{F262E265-3065-4171-9747-B81D38EB6813}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,10 @@ Global
 		{D7227CE6-6668-45DA-AD5C-1F2C61E99FAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D7227CE6-6668-45DA-AD5C-1F2C61E99FAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D7227CE6-6668-45DA-AD5C-1F2C61E99FAA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CA826390-CDB0-41C1-BC00-8C7F6A6EA1C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CA826390-CDB0-41C1-BC00-8C7F6A6EA1C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CA826390-CDB0-41C1-BC00-8C7F6A6EA1C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CA826390-CDB0-41C1-BC00-8C7F6A6EA1C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F262E265-3065-4171-9747-B81D38EB6813}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F262E265-3065-4171-9747-B81D38EB6813}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F262E265-3065-4171-9747-B81D38EB6813}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F262E265-3065-4171-9747-B81D38EB6813}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

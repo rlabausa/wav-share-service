@@ -39,7 +39,7 @@ namespace WavShareService.Controllers
         /// <param name="requestBody"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] CreateAudioFileRequest requestBody)
+        public async Task<IActionResult> Post([FromBody] CreateAudioFileRequest requestBody)
         {
             var newAudioFileId = await _audioFileBLL.CreateAudioFile(requestBody);
 
@@ -60,7 +60,7 @@ namespace WavShareService.Controllers
         /// <param name="requestBody"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<ActionResult> Put([FromBody] UpdateAudioFileRequest requestBody)
+        public async Task<IActionResult> Put([FromBody] UpdateAudioFileRequest requestBody)
         {
             var updateSuccessful = await _audioFileBLL.UpdateAudioFile(requestBody);
 
@@ -80,7 +80,7 @@ namespace WavShareService.Controllers
         /// <param name="requestParams"></param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<ActionResult> Delete([FromQuery] DeleteAudioFileRequest requestParams)
+        public async Task<IActionResult> Delete([FromQuery] DeleteAudioFileRequest requestParams)
         {
             var deleteSuccessful = await _audioFileBLL.DeleteAudioFile(requestParams);
 

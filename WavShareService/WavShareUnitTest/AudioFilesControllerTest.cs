@@ -10,7 +10,7 @@ namespace WavShareUnitTest
     public class AudioFilesControllerTest
     {
         [Fact]
-        public async Task GetAudioFileSuccess()
+        public async Task AudioFilesController_Returns_GetAudioFilesResponse()
         {
             // Arrange
             var mockLogger = new Mock<ILogger<AudioFilesController>>();

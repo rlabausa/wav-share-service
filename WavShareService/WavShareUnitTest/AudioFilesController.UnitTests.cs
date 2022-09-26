@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Moq;
 using WavShareService.Controllers;
 using WavShareServiceBLL;
 using WavShareServiceModels.AudioFiles;

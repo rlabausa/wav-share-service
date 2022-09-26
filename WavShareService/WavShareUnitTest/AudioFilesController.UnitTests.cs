@@ -23,8 +23,8 @@ namespace WavShareUnitTest
             var result = await audioFileController.Get(request);
 
             // Assert
-            Assert.IsType<ActionResult<IEnumerable<GetAudioFilesResponse>>>(result);
             Assert.NotNull(result);
+            Assert.IsType<ActionResult<IEnumerable<GetAudioFilesResponse>>>(result);
         }
 
         [Fact]
@@ -49,8 +49,8 @@ namespace WavShareUnitTest
             var result = await audioFileController.Post(request);
 
             // Assert
-            Assert.IsType<CreatedAtActionResult>(result);
             Assert.NotNull(result);
+            Assert.IsType<CreatedAtActionResult>(result);
         }
     }
 }

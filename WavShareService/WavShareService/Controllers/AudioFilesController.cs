@@ -27,7 +27,7 @@ namespace WavShareService.Controllers
         /// <exception cref="ApiException"></exception>
         [HttpGet]
         [ProducesResponseType(typeof(GetAudioFilesResponse), StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<GetAudioFilesResponse>>> Get([FromQuery] GetAudioFilesRequest requestParams)
+        public async Task<IActionResult> Get([FromQuery] GetAudioFilesRequest requestParams)
         {
             var results = await _audioFileBLL.GetAudioFiles(requestParams);
             return Ok(results);

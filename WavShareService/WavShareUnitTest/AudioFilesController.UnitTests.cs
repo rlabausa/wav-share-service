@@ -24,7 +24,7 @@ namespace WavShareUnitTest
 
             // Assert
             Assert.NotNull(result);
-            Assert.IsType<ActionResult<IEnumerable<GetAudioFilesResponse>>>(result);
+            Assert.IsType<OkObjectResult>(result);
         }
 
         [Fact]

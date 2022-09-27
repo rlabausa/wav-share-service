@@ -79,6 +79,8 @@ namespace WavShareUnitTest
             Assert.IsType<NoContentResult>(result);
         }
 
+        [Fact]
+        public async Task Delete_Returns_NoContentResult()
         {
             // Arrange
             var mockLogger = new Mock<ILogger<AudioFilesController>>();

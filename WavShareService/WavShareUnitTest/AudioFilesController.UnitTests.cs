@@ -18,7 +18,6 @@ namespace WavShareUnitTest
 
             var request = new GetAudioFilesRequest();
 
-
             // Act
             var result = await audioFileController.Get(request);
 
@@ -51,6 +50,33 @@ namespace WavShareUnitTest
             // Assert
             Assert.NotNull(result);
             Assert.IsType<CreatedAtActionResult>(result);
+        }
+
+        [Fact]
+        public async Task Put_Returns_IActionResult()
+        {
+            // Arrange
+            var mockLogger = new Mock<ILogger<AudioFilesController>>();
+            var mockAudioFileBLL = new Mock<IAudioFileBLL>();
+            var audioFileController = new AudioFilesController(mockAudioFileBLL.Object, mockLogger.Object);
+
+            var request = new UpdateAudioFileRequest(
+                    1,
+                    "hello_there.wav",
+                    "ZmFrZV9iYXNlNjRfZW5jb2RlZF9zdHJpbmc=",
+                    "General Kenobi"
+                );
+
+            mockAudioFileBLL.Setup(x => x.UpdateAudioFile(request))
+                .ReturnsAsync(true);
+
+
+            // Act
+            var result = await audioFileController.Put(request);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.IsType<NoContentResult>(result);
         }
     }
 }

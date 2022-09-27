@@ -27,7 +27,7 @@ namespace WavShareUnitTest
         }
 
         [Fact]
-        public async Task Post_Returns_IActionResult()
+        public async Task Post_Returns_CreatedAtActionResult()
         {
             // Arrange
             var mockLogger = new Mock<ILogger<AudioFilesController>>();

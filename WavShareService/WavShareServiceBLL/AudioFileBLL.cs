@@ -25,7 +25,7 @@ namespace WavShareServiceBLL
             return await _audioFileAdapter.GetAudioFiles(requestParams);
         }
 
-        public async Task<int?> CreateAudioFile(CreateAudioFileRequest requestBody)
+        public async Task<AudioFileDetails> CreateAudioFile(CreateAudioFileRequest requestBody)
         {
             var validationMessage = AudioFileValidator.Validate(requestBody);
 

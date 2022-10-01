@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using WavShareServiceModels.AudioFiles;
@@ -60,7 +61,6 @@ namespace WavShareServiceDAL
                         while (await reader.ReadAsync())
                         {
                             totalCount = await reader.GetFieldValueAsync<int>(0);
-
                         }
                     }
                 }
@@ -156,9 +156,9 @@ namespace WavShareServiceDAL
             };
         }
 
-        public async Task<int?> CreateAudioFile(CreateAudioFileRequest requestBody)
+        public async Task<AudioFileDetails> CreateAudioFile(CreateAudioFileRequest requestBody)
         {
-            int? newAudioFileId = null;
+            AudioFileDetails newAudioFileDetails = new AudioFileDetails();
 
             using (var connection = new SqlConnection(_dbConnString))
             {
@@ -174,17 +174,29 @@ namespace WavShareServiceDAL
                     cmd.Parameters.AddWithValue("@encoded_audio", requestBody.EncodedAudio);
                     cmd.Parameters.AddWithValue("@uploaded_by", requestBody.UploadedBy);
 
-                    var returnVal = await cmd.ExecuteScalarAsync();
-
-                    if (returnVal != DBNull.Value)
+                    using (var reader = await cmd.ExecuteReaderAsync())
                     {
-                        newAudioFileId = Convert.ToInt32(returnVal);
+                        while (await reader.ReadAsync())
+                        {
+                            for (int i = 0; i < reader.FieldCount; i++)
+                            {
+                                var colName = reader.GetName(i);
+                                Object colValue = await reader.GetFieldValueAsync<object>(i);
+
+                                var prop = newAudioFileDetails.GetType().GetProperty(colName);
+
+                                if (prop != null)
+                                {
+                                    prop.SetValue(newAudioFileDetails, colValue);
+                                }
+                            }
+                        }
+
                     }
-
                 }
-            }
 
-            return newAudioFileId;
+                return newAudioFileDetails;
+            }
         }
 
         public async Task<bool> UpdateAudioFile(UpdateAudioFileRequest requestBody)

@@ -11,7 +11,7 @@ namespace WavShareServiceDAL
     {
         public Task<GetAudioFilesResponse> GetAudioFiles(GetAudioFilesRequest requestParams);
 
-        public Task<int?> CreateAudioFile(CreateAudioFileRequest requestBody);
+        public Task<AudioFileDetails> CreateAudioFile(CreateAudioFileRequest requestBody);
 
         public Task<bool> UpdateAudioFile(UpdateAudioFileRequest requestBody);
 

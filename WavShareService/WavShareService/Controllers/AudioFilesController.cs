@@ -41,11 +41,11 @@ namespace WavShareService.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateAudioFileRequest requestBody)
         {
-            var newAudioFileId = await _audioFileBLL.CreateAudioFile(requestBody);
+            var newAudioFileDetails = await _audioFileBLL.CreateAudioFile(requestBody);
 
-            if (newAudioFileId.HasValue)
+            if (newAudioFileDetails != null)
             {
-                return CreatedAtAction(nameof(Get), new { AudioFileId = newAudioFileId }, requestBody);
+                return CreatedAtAction(nameof(Get), new { AudioFileId = newAudioFileDetails.AudioFileId }, newAudioFileDetails);
             }
             else
             {

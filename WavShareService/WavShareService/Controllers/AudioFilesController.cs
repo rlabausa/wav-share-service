@@ -80,7 +80,7 @@ namespace WavShareService.Controllers
 
             if (newAudioFileDetails != null)
             {
-                return CreatedAtAction(nameof(Get), new { AudioFileId = newAudioFileDetails.AudioFileId }, newAudioFileDetails);
+                return CreatedAtAction(nameof(Get), new { id = newAudioFileDetails.AudioFileId }, newAudioFileDetails);
             }
             else
             {

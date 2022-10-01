@@ -69,6 +69,81 @@ namespace WavShareServiceDAL
             }
         }
 
+        public async Task<GetAudioFilesDetailsResponse> GetAudioFilesDetails(GetAudioFilesRequest requestParams)
+        {
+            var audioFilesDetails = new List<AudioFileDetails>();
+            var totalRecords = await this.GetTotalAudioFileCount(requestParams);
+
+            if (totalRecords > 0)
+            {
+                using (var connection = new SqlConnection(_dbConnString))
+                {
+                    await connection.OpenAsync();
+
+                    using (var cmd = connection.CreateCommand())
+                    {
+                        cmd.Connection = connection;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.CommandText = "[dbo].[GetAudioFiles]";
+
+                        if (requestParams != null)
+                        {
+                            if (requestParams.AudioFileId.HasValue)
+                            {
+                                cmd.Parameters.AddWithValue("@file_id", requestParams.AudioFileId.Value);
+                            }
+
+                            if (!string.IsNullOrEmpty(requestParams.AudioFileName))
+                            {
+                                cmd.Parameters.AddWithValue("@file_name", requestParams.AudioFileName);
+                            }
+
+                            if (!string.IsNullOrEmpty(requestParams.UploadedBy))
+                            {
+                                cmd.Parameters.AddWithValue("@file_uploaded_by", requestParams.UploadedBy);
+                            }
+                        }
+
+                        using (var reader = await cmd.ExecuteReaderAsync())
+                        {
+                            while (await reader.ReadAsync())
+                            {
+                                AudioFileDetails detailRecord = new AudioFileDetails();
+
+                                for (int i = 0; i < reader.FieldCount; i++)
+                                {
+                                    var colName = reader.GetName(i);
+                                    Object colValue = await reader.GetFieldValueAsync<object>(i);
+
+                                    var prop = detailRecord.GetType().GetProperty(colName);
+
+                                    if (prop != null)
+                                    {
+                                        prop.SetValue(detailRecord, colValue);
+                                    }
+                                   
+                                }
+
+                                if (!string.IsNullOrEmpty(detailRecord.AudioFileName))
+                                {
+                                    audioFilesDetails.Add(detailRecord);
+                                }
+
+                            }
+                        }
+
+
+                    }
+
+                }
+            }
+
+            return new GetAudioFilesDetailsResponse()
+            {
+                TotalRecords = totalRecords,
+                AudioFilesDetails = audioFilesDetails
+            };
+        }
         public async Task<GetAudioFilesResponse> GetAudioFiles(GetAudioFilesRequest requestParams)
         {
             var audioFiles = new List<AudioFile>();

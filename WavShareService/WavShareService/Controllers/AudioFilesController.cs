@@ -34,10 +34,24 @@ namespace WavShareService.Controllers
         /// <returns></returns>
         /// <exception cref="ApiException"></exception>
         [HttpGet]
-        [ProducesResponseType(typeof(GetAudioFilesResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(GetAudioFilesDetailsResponse), StatusCodes.Status200OK)]
         public async Task<IActionResult> Get([FromQuery] GetAudioFilesRequest requestParams)
         {
-            var results = await _audioFileBLL.GetAudioFiles(requestParams);
+            var results = await _audioFileBLL.GetAudioFilesDetails(requestParams);
+            return Ok(results);
+        }
+
+
+        /// <summary>
+        /// Retrieve audio file by ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(GetAudioFilesResponse), StatusCodes.Status200OK)]
+        public async Task<IActionResult> Get(int id)
+        {
+            var results = await _audioFileBLL.GetAudioFileById(id);
             return Ok(results);
         }
 

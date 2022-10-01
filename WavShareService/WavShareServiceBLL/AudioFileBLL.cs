@@ -25,6 +25,17 @@ namespace WavShareServiceBLL
             return await _audioFileAdapter.GetAudioFiles(requestParams);
         }
 
+        async Task<GetAudioFilesDetailsResponse> IAudioFileBLL.GetAudioFilesDetails(GetAudioFilesRequest requestParams)
+        {
+            return await _audioFileAdapter.GetAudioFilesDetails(requestParams);
+        }
+
+        public Task<AudioFile> GetAudioFileById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+
         public async Task<AudioFileDetails> CreateAudioFile(CreateAudioFileRequest requestBody)
         {
             var validationMessage = AudioFileValidator.Validate(requestBody);

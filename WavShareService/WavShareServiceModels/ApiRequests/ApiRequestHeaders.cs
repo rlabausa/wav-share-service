@@ -21,7 +21,12 @@ namespace WavShareServiceModels.ApiRequests
         [DefaultValue(ClientCorrelIdHeaderValue.Generate)]
         public string? ClientCorrelId { get; set; }
 
-        public ApiRequestHeaders(string? clientCorrelId)
+        public ApiRequestHeaders()
+        {
+            ClientCorrelId = ClientCorrelIdHeaderValue.Generate;
+        }
+
+        public ApiRequestHeaders(string clientCorrelId)
         {
             ClientCorrelId = clientCorrelId;
         }

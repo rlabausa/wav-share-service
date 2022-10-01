@@ -39,6 +39,7 @@ namespace WavShareService.Controllers
         /// <param name="requestBody"></param>
         /// <returns></returns>
         [HttpPost]
+        [ProducesResponseType(typeof(AudioFileDetails), StatusCodes.Status201Created)]
         public async Task<IActionResult> Post([FromBody] CreateAudioFileRequest requestBody)
         {
             var newAudioFileDetails = await _audioFileBLL.CreateAudioFile(requestBody);

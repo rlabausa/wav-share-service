@@ -8,12 +8,19 @@ using WavShareServiceModels.Exceptions;
 
 namespace WavShareService.Controllers
 {
-
+    /// <summary>
+    /// API Controller for Audio Files.
+    /// </summary>
     public class AudioFilesController : ApiControllerBase
     {
         private IAudioFileBLL _audioFileBLL;
         private ILogger<AudioFilesController> _logger;
 
+        /// <summary>
+        /// Constructs an AudioFilesController.
+        /// </summary>
+        /// <param name="audioFileBLL"></param>
+        /// <param name="logger"></param>
         public AudioFilesController(IAudioFileBLL audioFileBLL, ILogger<AudioFilesController> logger)
         {
             _audioFileBLL = audioFileBLL;

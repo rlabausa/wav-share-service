@@ -22,5 +22,16 @@ namespace WavShareServiceModels.AudioFiles
         [StringLength(100)]
         public string? UploadedBy { get; set; }
 
+        public GetAudioFilesRequest(string clientCorrelId): base(clientCorrelId)
+        {
+
+        }
+
+        public GetAudioFilesRequest(int? audioFileId, string? audioFileName, string? uploadedBy, string? clientCorrelId) : base(clientCorrelId)
+        {
+            AudioFileId = audioFileId;
+            AudioFileName = audioFileName;
+            UploadedBy = uploadedBy;
+        }
     }
 }

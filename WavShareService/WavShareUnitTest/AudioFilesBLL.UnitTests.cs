@@ -7,12 +7,16 @@ using System.Threading.Tasks;
 using WavShareService.Controllers;
 using WavShareServiceBLL;
 using WavShareServiceDAL;
+using WavShareServiceModels.ApiRequests;
 using WavShareServiceModels.AudioFiles;
 
 namespace WavShareUnitTest
 {
+    
     public class AudioFilesBLLTest
     {
+        private static ApiRequestHeaders REQUEST_HEADERS = new ApiRequestHeaders(Guid.NewGuid().ToString());
+
         [Fact]
         public async Task GetAudioFiles_Returns_GetAudioFilesResponse()
         {
@@ -20,7 +24,7 @@ namespace WavShareUnitTest
             var mockAudioFileAdapter = new Mock<IAudioFileAdapter>();
             var audioFileBLL = new AudioFileBLL(mockAudioFileAdapter.Object);
 
-            var mockRequest = new GetAudioFilesRequest();
+            var mockRequest = new GetAudioFilesRequest(REQUEST_HEADERS.ClientCorrelId.ToString());
             var mockResponse = new GetAudioFilesResponse()
             {
                 AudioFiles = new List<AudioFile>()

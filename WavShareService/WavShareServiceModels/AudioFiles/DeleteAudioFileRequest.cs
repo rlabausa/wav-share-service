@@ -14,5 +14,10 @@ namespace WavShareServiceModels.AudioFiles
         [Required]
         [FromQuery]
         public int AudioFileId { get; set; }
+
+        public DeleteAudioFileRequest(string clientCorrelId, int audioFileId): base(clientCorrelId)
+        {
+            AudioFileId = audioFileId;
+        }
     }
 }

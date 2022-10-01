@@ -2,12 +2,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using WavShareService.Controllers;
 using WavShareServiceBLL;
+using WavShareServiceModels.ApiRequests;
 using WavShareServiceModels.AudioFiles;
 
 namespace WavShareUnitTest
 {
     public class AudioFilesControllerTest
     {
+        private static ApiRequestHeaders REQUEST_HEADERS = new ApiRequestHeaders(Guid.NewGuid().ToString());
+
         [Fact]
         public async Task Get_Returns_OkObjectResult()
         {
@@ -16,7 +19,7 @@ namespace WavShareUnitTest
             var mockAudioFileBLL = new Mock<IAudioFileBLL>();
             var audioFileController = new AudioFilesController(mockAudioFileBLL.Object, mockLogger.Object);
 
-            var request = new GetAudioFilesRequest();
+            var request = new GetAudioFilesRequest(REQUEST_HEADERS.ClientCorrelId.ToString());
 
             // Act
             var result = await audioFileController.Get(request);
@@ -45,7 +48,7 @@ namespace WavShareUnitTest
 
 
             // Act
-            var result = await audioFileController.Post(request);
+            var result = await audioFileController.Post(REQUEST_HEADERS, request);
 
             // Assert
             Assert.NotNull(result);
@@ -72,7 +75,7 @@ namespace WavShareUnitTest
 
 
             // Act
-            var result = await audioFileController.Put(request);
+            var result = await audioFileController.Put(REQUEST_HEADERS, request);
 
             // Assert
             Assert.NotNull(result);
@@ -87,19 +90,14 @@ namespace WavShareUnitTest
             var mockAudioFileBLL = new Mock<IAudioFileBLL>();
             var audioFileController = new AudioFilesController(mockAudioFileBLL.Object, mockLogger.Object);
 
-            var request = new UpdateAudioFileRequest(
-                    1,
-                    "hello_there.wav",
-                    "ZmFrZV9iYXNlNjRfZW5jb2RlZF9zdHJpbmc=",
-                    "General Kenobi"
-                );
+            var request = new DeleteAudioFileRequest(REQUEST_HEADERS.ClientCorrelId.ToString(), 1);
 
-            mockAudioFileBLL.Setup(x => x.UpdateAudioFile(request))
+            mockAudioFileBLL.Setup(x => x.DeleteAudioFile(request))
                 .ReturnsAsync(true);
 
 
             // Act
-            var result = await audioFileController.Put(request);
+            var result = await audioFileController.Delete(request);
 
             // Assert
             Assert.NotNull(result);

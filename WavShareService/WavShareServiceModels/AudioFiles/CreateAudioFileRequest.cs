@@ -8,7 +8,7 @@ using WavShareServiceModels.ApiRequests;
 
 namespace WavShareServiceModels.AudioFiles
 {
-    public class CreateAudioFileRequest: ApiRequest
+    public class CreateAudioFileRequest
     {
         [Required]
         public string AudioFileName { get; set; }

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using WavShareServiceBLL;
+using WavShareServiceModels.ApiRequests;
 using WavShareServiceModels.AudioFiles;
 using WavShareServiceModels.Exceptions;
 
@@ -36,11 +37,13 @@ namespace WavShareService.Controllers
         /// <summary>
         /// Create new audio file
         /// </summary>
+        /// <param name="requestHeaders"></param>
         /// <param name="requestBody"></param>
         /// <returns></returns>
+
         [HttpPost]
         [ProducesResponseType(typeof(AudioFileDetails), StatusCodes.Status201Created)]
-        public async Task<IActionResult> Post([FromBody] CreateAudioFileRequest requestBody)
+        public async Task<IActionResult> Post([FromQuery] ApiRequestHeaders requestHeaders, [FromBody] CreateAudioFileRequest requestBody)
         {
             var newAudioFileDetails = await _audioFileBLL.CreateAudioFile(requestBody);
 
@@ -58,10 +61,11 @@ namespace WavShareService.Controllers
         /// <summary>
         /// Update existing audio file
         /// </summary>
+        /// <param name="requestHeaders"></param>
         /// <param name="requestBody"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IActionResult> Put([FromBody] UpdateAudioFileRequest requestBody)
+        public async Task<IActionResult> Put([FromQuery] ApiRequestHeaders requestHeaders, [FromBody] UpdateAudioFileRequest requestBody)
         {
             var updateSuccessful = await _audioFileBLL.UpdateAudioFile(requestBody);
 

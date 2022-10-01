@@ -12,7 +12,7 @@ using WavShareServiceModels.ValidationAttributes;
 
 namespace WavShareServiceModels.ApiRequests
 {
-    public class ApiRequest
+    public class ApiRequestHeaders
     {
         [CorrelId]
         [FromHeader(Name = Header.ClientCorrelId)]

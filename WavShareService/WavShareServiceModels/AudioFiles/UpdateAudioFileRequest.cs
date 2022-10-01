@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,11 +9,11 @@ using WavShareServiceModels.ApiRequests;
 
 namespace WavShareServiceModels.AudioFiles
 {
-    public class UpdateAudioFileRequest: ApiRequest
+    public class UpdateAudioFileRequest
     {
         [Required]
         public int AudioFileId { get; set; }
-        
+
         [Required]
         public string AudioFileName { get; set; }
 

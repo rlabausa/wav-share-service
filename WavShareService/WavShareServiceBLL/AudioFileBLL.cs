@@ -41,7 +41,7 @@ namespace WavShareServiceBLL
         {
             var validationMessage = AudioFileValidator.Validate(requestBody);
 
-            if (string.IsNullOrEmpty(validationMessage))
+            if (!string.IsNullOrEmpty(validationMessage))
             {
                 throw new ApiException(HttpStatusCode.BadRequest, validationMessage);
             }

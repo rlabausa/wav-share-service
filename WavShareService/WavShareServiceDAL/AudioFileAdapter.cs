@@ -144,6 +144,21 @@ namespace WavShareServiceDAL
                 AudioFilesDetails = audioFilesDetails
             };
         }
+        
+        public async Task<AudioFile> GetAudioFileById(int id)
+        {
+            AudioFile? audioFile = null;
+
+            var results = await GetAudioFiles(new GetAudioFilesRequest() { AudioFileId = id });
+
+            if (results != null && results.AudioFiles != null && results.AudioFiles.Any())
+            {
+                audioFile = results.AudioFiles.First();
+            }
+
+            return audioFile;
+        }
+        
         public async Task<GetAudioFilesResponse> GetAudioFiles(GetAudioFilesRequest requestParams)
         {
             var audioFiles = new List<AudioFile>();

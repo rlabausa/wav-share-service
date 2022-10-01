@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WavShareServiceBLL;
 using WavShareServiceModels.ApiRequests;
+using WavShareServiceModels.ApiResponses;
 using WavShareServiceModels.AudioFiles;
 using WavShareServiceModels.Exceptions;
 
@@ -28,13 +29,14 @@ namespace WavShareService.Controllers
         }
 
         /// <summary>
-        /// Retrieve audio files
+        /// Retrieve audio file details
         /// </summary>
         /// <param name="requestParams"></param>
         /// <returns></returns>
         /// <exception cref="ApiException"></exception>
         [HttpGet]
         [ProducesResponseType(typeof(GetAudioFilesDetailsResponse), StatusCodes.Status200OK)]
+
         public async Task<IActionResult> Get([FromQuery] GetAudioFilesRequest requestParams)
         {
             var results = await _audioFileBLL.GetAudioFilesDetails(requestParams);
@@ -43,16 +45,24 @@ namespace WavShareService.Controllers
 
 
         /// <summary>
-        /// Retrieve audio file by ID
+        /// Retrieve audio file with encoded audio
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(GetAudioFilesResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(AudioFile), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Get(int id)
         {
-            var results = await _audioFileBLL.GetAudioFileById(id);
-            return Ok(results);
+            var record = await _audioFileBLL.GetAudioFileById(id);
+
+            if (record == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(record);
+
         }
 
         /// <summary>

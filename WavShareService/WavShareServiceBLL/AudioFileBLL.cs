@@ -25,14 +25,14 @@ namespace WavShareServiceBLL
             return await _audioFileAdapter.GetAudioFiles(requestParams);
         }
 
-        async Task<GetAudioFilesDetailsResponse> IAudioFileBLL.GetAudioFilesDetails(GetAudioFilesRequest requestParams)
+        public async Task<GetAudioFilesDetailsResponse> GetAudioFilesDetails(GetAudioFilesRequest requestParams)
         {
             return await _audioFileAdapter.GetAudioFilesDetails(requestParams);
         }
 
-        public Task<AudioFile> GetAudioFileById(int id)
+        public async Task<AudioFile> GetAudioFileById(int id)
         {
-            throw new NotImplementedException();
+            return await _audioFileAdapter.GetAudioFileById(id);
         }
 
 

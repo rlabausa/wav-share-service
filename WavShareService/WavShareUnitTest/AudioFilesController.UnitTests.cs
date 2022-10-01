@@ -41,7 +41,7 @@ namespace WavShareUnitTest
                 );
 
             mockAudioFileBLL.Setup(x => x.CreateAudioFile(request))
-                .ReturnsAsync(1);
+                .ReturnsAsync(new AudioFileDetails());
 
 
             // Act

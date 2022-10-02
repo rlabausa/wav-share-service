@@ -102,6 +102,10 @@ namespace WavShareServiceDAL
                             {
                                 cmd.Parameters.AddWithValue("@file_uploaded_by", requestParams.UploadedBy);
                             }
+
+                            cmd.Parameters.AddWithValue("@page_cursor", requestParams.PageCursor);
+
+                            cmd.Parameters.AddWithValue("@page_limit", requestParams.PageLimit);
                         }
 
                         using (var reader = await cmd.ExecuteReaderAsync())

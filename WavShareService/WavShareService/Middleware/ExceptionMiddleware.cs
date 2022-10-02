@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Primitives;
 using System.Data.SqlClient;
 using System.Diagnostics;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using WavShareServiceModels.ApiResponses;
@@ -12,17 +11,30 @@ using WavShareServiceModels.Logging;
 
 namespace WavShareService.Middleware
 {
+    /// <summary>
+    /// Global exception handler for WavShareService Web API.
+    /// </summary>
     public class ExceptionMiddleware
     {
         private readonly RequestDelegate _next;
         private readonly ILogger<ExceptionMiddleware> _logger;
 
+        /// <summary>
+        /// Constructs an <see cref="ExceptionMiddleware"/> class.
+        /// </summary>
+        /// <param name="next">The next delegate/middleware in the pipeline.</param>
+        /// <param name="logger">Logger populated through dependency injection.</param>
         public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
         {
             _next = next;
             _logger = logger;
         }
 
+        /// <summary>
+        /// Log data for the current HTTP request.
+        /// </summary>
+        /// <param name="httpContext">The current HTTP context.</param>
+        /// <returns></returns>
         public async Task InvokeAsync(HttpContext httpContext)
         {
             var timeStamp = DateTime.UtcNow;
@@ -74,7 +86,7 @@ namespace WavShareService.Middleware
 
                 _logger.LogError(record.ToString());
             }
-            else if (httpContext.Response.StatusCode >= StatusCodes.Status400BadRequest)
+            else if (httpContext.Response.StatusCode >= StatusCodes.Status400BadRequest) // for other errors not caught as exceptions (e.g., model validation)
             {
                 record.CorrelationId = correlId;
                 record.TraceLevel = TraceLevel.Error;
@@ -89,6 +101,13 @@ namespace WavShareService.Middleware
             }
         }
 
+        /// <summary>
+        /// Write custom <see cref="ApiErrorResponse"/> to the response body.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="exc"></param>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
         private Task HandleErrorResponse(HttpContext context, ApiException exc, DateTime? dateTime = null)
         {
             context.Response.StatusCode = exc.StatusCode;
@@ -106,6 +125,13 @@ namespace WavShareService.Middleware
             return context.Response.WriteAsync(errorResponse, Encoding.UTF8);
         }
 
+        /// <summary>
+        /// Write custom <see cref="ApiErrorResponse"/> to the response body.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="exc"></param>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
         private Task HandleErrorResponse(HttpContext context, SqlException exc, DateTime? dateTime = null)
         {
             context.Response.StatusCode = StatusCodes.Status500InternalServerError;
@@ -122,6 +148,13 @@ namespace WavShareService.Middleware
             return context.Response.WriteAsync(errorResponse);
         }
 
+        /// <summary>
+        /// Write custom <see cref="ApiErrorResponse"/> to the response body.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="exc"></param>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
         private Task HandleErrorResponse(HttpContext context, Exception exc, DateTime? dateTime = null)
         {
             context.Response.StatusCode = StatusCodes.Status500InternalServerError;

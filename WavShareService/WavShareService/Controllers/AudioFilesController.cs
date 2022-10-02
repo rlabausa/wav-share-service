@@ -19,7 +19,7 @@ namespace WavShareService.Controllers
         private ILogger<AudioFilesController> _logger;
 
         /// <summary>
-        /// Constructs an AudioFilesController.
+        /// Constructs an <see cref="AudioFilesController"/>.
         /// </summary>
         /// <param name="audioFileBLL"></param>
         /// <param name="logger"></param>

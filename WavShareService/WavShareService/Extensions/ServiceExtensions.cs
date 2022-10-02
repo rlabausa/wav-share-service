@@ -4,6 +4,9 @@ using WavShareServiceModels.ApiResponses;
 
 namespace WavShareService.Extensions
 {
+    /// <summary>
+    /// Extension methods for the <see cref="IServiceCollection"/> class.
+    /// </summary>
     public static class ServiceExtensions
     {
         /// <summary>
@@ -54,7 +57,6 @@ namespace WavShareService.Extensions
         /// Add required routing configurations for the application.
         /// </summary>
         /// <param name="services"></param>
-        /// <param name="configuration"></param>
         /// <returns><see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
         public static IServiceCollection AddConfiguredRouting(this IServiceCollection services)
         {

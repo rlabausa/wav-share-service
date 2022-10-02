@@ -49,12 +49,13 @@ namespace WavShareService.Controllers
         /// <summary>
         /// Retrieve audio file with encoded audio
         /// </summary>
+        /// <param name="requestHeaders"></param>
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(AudioFile), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> Get([FromQuery] ApiRequestHeaders requestHeaders, int id)
         {
             var record = await _audioFileBLL.GetAudioFileById(id);
 

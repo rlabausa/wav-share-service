@@ -166,7 +166,7 @@ namespace WavShareServiceDAL
         public async Task<GetAudioFilesResponse> GetAudioFiles(GetAudioFilesRequest requestParams)
         {
             var audioFiles = new List<AudioFile>();
-            var totalRecords = await this.GetTotalAudioFileCount(requestParams);
+            var totalRecords = await GetTotalAudioFileCount(requestParams);
 
             if (totalRecords > 0)
             {
@@ -209,23 +209,11 @@ namespace WavShareServiceDAL
                                     var colName = reader.GetName(i);
                                     Object colValue = await reader.GetFieldValueAsync<object>(i);
 
-                                    switch (colName)
+                                    var prop = audioFile.GetType().GetProperty(colName);
+
+                                    if (prop != null)
                                     {
-                                        case "AudioFileId":
-                                            audioFile.AudioFileId = (int)colValue;
-                                            break;
-                                        case "AudioFileName":
-                                            audioFile.AudioFileName = (string)colValue;
-                                            break;
-                                        case "EncodedAudio":
-                                            audioFile.EncodedAudio = (string)colValue;
-                                            break;
-                                        case "UploadedBy":
-                                            audioFile.UploadedBy = (string)colValue;
-                                            break;
-                                        case "UploadDate":
-                                            audioFile.UploadDate = (DateTime)colValue;
-                                            break;
+                                        prop.SetValue(audioFile, colValue);
                                     }
                                 }
 

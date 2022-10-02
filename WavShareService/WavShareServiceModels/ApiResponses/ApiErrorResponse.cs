@@ -51,7 +51,11 @@ namespace WavShareServiceModels.ApiResponses
                     errorMessages.Add(val.ErrorMessage);
                 }
 
-                errors.Add(key, errorMessages);
+                if (errorMessages.Count > 0)
+                {
+                    errors.Add(key, errorMessages);
+                }
+
             }
 
             Details = errors;

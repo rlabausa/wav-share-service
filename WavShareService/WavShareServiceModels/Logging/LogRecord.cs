@@ -11,6 +11,9 @@ namespace WavShareServiceModels.Logging
 {
     public class LogRecord
     {
+        [JsonPropertyName("correlationId")]
+        public Guid CorrelationId { get; set; }
+
         [JsonPropertyName("startTime")]
         public DateTime? StartTime { get; set; }
 

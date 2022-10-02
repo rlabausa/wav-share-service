@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.Extensions.Primitives;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using WavShareServiceModels.ApiResponses;
+using WavShareServiceModels.Constants;
 using WavShareServiceModels.Exceptions;
 using WavShareServiceModels.Logging;
 
@@ -24,6 +27,11 @@ namespace WavShareService.Middleware
         {
             var timeStamp = DateTime.UtcNow;
             var requestUrl = httpContext.Request.GetDisplayUrl();
+
+            StringValues correlIdString;
+            httpContext.Response.Headers.TryGetValue(Header.ClientCorrelId, out correlIdString);
+            Guid correlId;
+            Guid.TryParse(correlIdString.ToString(), out correlId);
 
             Exception? caughtException = null;
 
@@ -59,6 +67,7 @@ namespace WavShareService.Middleware
 
             if (caughtException != null)
             {
+                record.CorrelationId = correlId;
                 record.TraceLevel = TraceLevel.Error;
                 record.Message = caughtException.StackTrace;
                 record.ExceptionType = caughtException.GetType().FullName;
@@ -67,14 +76,14 @@ namespace WavShareService.Middleware
             }
             else if (httpContext.Response.StatusCode >= StatusCodes.Status400BadRequest)
             {
+                record.CorrelationId = correlId;
                 record.TraceLevel = TraceLevel.Error;
-
-                //TODO: Fix request body logging
                 record.Message = $"{httpContext.Response.StatusCode} - {httpContext.Response.Body}";
                 _logger.LogError(record.ToString());
             }
             else
             {
+                record.CorrelationId = correlId;
                 record.TraceLevel = TraceLevel.Info;
                 _logger.LogInformation(record.ToString());
             }

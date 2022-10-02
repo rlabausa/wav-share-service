@@ -1,9 +1,4 @@
-using WavShareServiceBLL;
-using WavShareServiceDAL;
-using Microsoft.Extensions.Logging;
 using WavShareService.Extensions;
-using Microsoft.AspNetCore.Mvc;
-using WavShareServiceModels.ApiResponses;
 
 var builder = WebApplication.CreateBuilder(args);
 

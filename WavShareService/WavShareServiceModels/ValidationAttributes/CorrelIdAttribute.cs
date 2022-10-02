@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WavShareServiceModels.ApiRequests;
+using WavShareServiceModels.AudioFiles;
 using WavShareServiceModels.Constants;
 
 namespace WavShareServiceModels.ValidationAttributes
@@ -18,10 +20,11 @@ namespace WavShareServiceModels.ValidationAttributes
         {
             string? guidOption = (string)value ?? null;
 
-            if (string.IsNullOrEmpty(guidOption))
-            {
-                return new ValidationResult($"{Header.ClientCorrelId} header is required.");
-            }
+            // This will duplicate error message if applied with [Required]
+            //if (string.IsNullOrEmpty(guidOption))
+            //{
+            //    return new ValidationResult($"{Header.ClientCorrelId} header is required.");
+            //}
 
             if (guidOption != ClientCorrelIdHeaderValue.Generate)
             {
@@ -30,7 +33,7 @@ namespace WavShareServiceModels.ValidationAttributes
 
                 if (!isValidGuid)
                 {
-                    return new ValidationResult($"{Header.ClientCorrelId} value must be 'generate' or a valid GUID format.");
+                    return new ValidationResult($"{nameof(ApiRequestHeaders.ClientCorrelId)} value must be 'generate' or a valid GUID format.");
                 }
             }
 

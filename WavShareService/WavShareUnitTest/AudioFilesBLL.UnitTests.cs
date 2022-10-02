@@ -24,7 +24,7 @@ namespace WavShareUnitTest
             var mockAudioFileAdapter = new Mock<IAudioFileAdapter>();
             var audioFileBLL = new AudioFileBLL(mockAudioFileAdapter.Object);
 
-            var mockRequest = new GetAudioFilesRequest(REQUEST_HEADERS.ClientCorrelId.ToString());
+            var mockRequest = new GetAudioFilesRequest();
             var mockResponse = new GetAudioFilesResponse()
             {
                 AudioFiles = new List<AudioFile>()

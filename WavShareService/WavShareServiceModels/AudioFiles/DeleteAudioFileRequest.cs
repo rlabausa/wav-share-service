@@ -1,26 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WavShareServiceModels.ApiRequests;
+using WavShareServiceModels.Constants;
 
 namespace WavShareServiceModels.AudioFiles
 {
-    public class DeleteAudioFileRequest: ApiRequestHeaders
+    public class DeleteAudioFileRequest
     {
         [Required]
         [FromQuery]
-        public int AudioFileId { get; set; }
+        [Range(0, int.MaxValue, ErrorMessage = "The value for AudioFileId must be greater than 0.")]
+        public int? AudioFileId { get; set; }
 
-        public DeleteAudioFileRequest(): base()
+        public DeleteAudioFileRequest()
         {
-            AudioFileId = -1;
+
         }
 
-        public DeleteAudioFileRequest(string clientCorrelId, int audioFileId): base(clientCorrelId)
+        public DeleteAudioFileRequest(int? audioFileId)
         {
             AudioFileId = audioFileId;
         }

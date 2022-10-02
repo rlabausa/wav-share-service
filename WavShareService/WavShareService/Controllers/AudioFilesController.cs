@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http.Headers;
 using Microsoft.AspNetCore.Mvc;
 using WavShareServiceBLL;
 using WavShareServiceModels.ApiRequests;
@@ -31,13 +32,14 @@ namespace WavShareService.Controllers
         /// <summary>
         /// Retrieve audio file details
         /// </summary>
+        /// <param name="requestHeaders"></param>
         /// <param name="requestParams"></param>
         /// <returns></returns>
         /// <exception cref="ApiException"></exception>
         [HttpGet]
         [ProducesResponseType(typeof(GetAudioFilesDetailsResponse), StatusCodes.Status200OK)]
 
-        public async Task<IActionResult> Get([FromQuery] GetAudioFilesRequest requestParams)
+        public async Task<IActionResult> Get([FromQuery] ApiRequestHeaders requestHeaders, [FromQuery] GetAudioFilesRequest requestParams)
         {
             var results = await _audioFileBLL.GetAudioFilesDetails(requestParams);
             return Ok(results);
@@ -113,10 +115,11 @@ namespace WavShareService.Controllers
         /// <summary>
         /// Delete existing audio file
         /// </summary>
+        /// <param name="requestHeaders"></param>
         /// <param name="requestParams"></param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<IActionResult> Delete([FromQuery] DeleteAudioFileRequest requestParams)
+        public async Task<IActionResult> Delete([FromQuery] ApiRequestHeaders requestHeaders, [FromQuery] DeleteAudioFileRequest requestParams)
         {
             var deleteSuccessful = await _audioFileBLL.DeleteAudioFile(requestParams);
 

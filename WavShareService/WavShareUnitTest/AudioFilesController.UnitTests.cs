@@ -19,10 +19,10 @@ namespace WavShareUnitTest
             var mockAudioFileBLL = new Mock<IAudioFileBLL>();
             var audioFileController = new AudioFilesController(mockAudioFileBLL.Object, mockLogger.Object);
 
-            var request = new GetAudioFilesRequest(REQUEST_HEADERS.ClientCorrelId.ToString());
+            var request = new GetAudioFilesRequest();
 
             // Act
-            var result = await audioFileController.Get(request);
+            var result = await audioFileController.Get(REQUEST_HEADERS, request);
 
             // Assert
             Assert.NotNull(result);
@@ -90,14 +90,14 @@ namespace WavShareUnitTest
             var mockAudioFileBLL = new Mock<IAudioFileBLL>();
             var audioFileController = new AudioFilesController(mockAudioFileBLL.Object, mockLogger.Object);
 
-            var request = new DeleteAudioFileRequest(REQUEST_HEADERS.ClientCorrelId.ToString(), 1);
+            var request = new DeleteAudioFileRequest(1);
 
             mockAudioFileBLL.Setup(x => x.DeleteAudioFile(request))
                 .ReturnsAsync(true);
 
 
             // Act
-            var result = await audioFileController.Delete(request);
+            var result = await audioFileController.Delete(REQUEST_HEADERS, request);
 
             // Assert
             Assert.NotNull(result);

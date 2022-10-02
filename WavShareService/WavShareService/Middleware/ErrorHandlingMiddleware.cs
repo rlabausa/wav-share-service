@@ -12,19 +12,19 @@ using WavShareServiceModels.Logging;
 namespace WavShareService.Middleware
 {
     /// <summary>
-    /// Global exception handler for WavShareService Web API.
+    /// Global error handler for WavShareService Web API.
     /// </summary>
-    public class ExceptionMiddleware
+    public class ErrorHandlingMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger<ExceptionMiddleware> _logger;
+        private readonly ILogger<ErrorHandlingMiddleware> _logger;
 
         /// <summary>
-        /// Constructs an <see cref="ExceptionMiddleware"/> class.
+        /// Constructs an <see cref="ErrorHandlingMiddleware"/> class.
         /// </summary>
         /// <param name="next">The next delegate/middleware in the pipeline.</param>
         /// <param name="logger">Logger populated through dependency injection.</param>
-        public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
+        public ErrorHandlingMiddleware(RequestDelegate next, ILogger<ErrorHandlingMiddleware> logger)
         {
             _next = next;
             _logger = logger;

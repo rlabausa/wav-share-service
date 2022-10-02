@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
+using WavShareService.Filters;
 
 namespace WavShareService.Extensions
 {
@@ -16,6 +17,8 @@ namespace WavShareService.Extensions
             return services.AddSwaggerGen(opts =>
             {
                 opts.DescribeAllParametersInCamelCase();
+
+                //opts.OperationFilter<ClientCorrelIdHeaderFilter>();
 
                 opts.SwaggerDoc("v1", new OpenApiInfo
                 {

@@ -1,7 +1,7 @@
 USE [WavShare]
 GO
 
-/****** Object:  StoredProcedure [dbo].[GetAudioFiles]    Script Date: 9/7/2022 9:53:56 AM ******/
+/****** Object:  StoredProcedure [dbo].[GetAudioFiles]    Script Date: 10/2/2022 11:02:00 AM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -12,14 +12,15 @@ GO
 
 
 
+
 -- =============================================
 -- Author:		Ruby Labausa
 -- Create date: 9/4/2022
 -- Description:	GET all audio files
 -- =============================================
-CREATE OR ALTER       PROCEDURE [dbo].[GetAudioFiles] 
+CREATE OR ALTER         PROCEDURE [dbo].[GetAudioFiles] 
 	-- Add the parameters for the stored procedure here
-	@page_cursor INT = 1,
+	@page_cursor INT = 0,
 	@page_limit INT = 10,
 	@sort_column VARCHAR(50) = 'AudioFileId',
 	@sort_direction VARCHAR(4) = 'ASC',
@@ -58,7 +59,7 @@ BEGIN
 		CASE WHEN @sort_column = 'AudioFileName' AND @sort_direction = @DESC THEN [AudioFileName] END DESC,
 		CASE WHEN @sort_column = 'UploadedBy' AND @sort_direction = @DESC THEN [UploadedBy] END DESC,
 		CASE WHEN @sort_column = 'UploadDate' AND @sort_direction = @DESC THEN [UploadDate] END DESC
-	OFFSET (@page_cursor -1) * (@page_limit) ROWS
+	OFFSET (@page_cursor) * (@page_limit) ROWS
 	FETCH NEXT @page_limit ROWS ONLY
 	
 END

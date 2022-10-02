@@ -30,6 +30,29 @@ namespace WavShareUnitTest
         }
 
         [Fact]
+        public async Task Get_Id_Returns_OkObjectResult()
+        {
+            // Arrange
+            var mockLogger = new Mock<ILogger<AudioFilesController>>();
+            var mockAudioFileBLL = new Mock<IAudioFileBLL>();
+            var audioFileController = new AudioFilesController(mockAudioFileBLL.Object, mockLogger.Object);
+
+            var requestedId = 1;
+            var mockResponse = new AudioFile(1, "hello.wav", "ZmFrZV9iYXNlNjRfZW5jb2RlZF9zdHJpbmc=", "ruby", DateTime.UtcNow);
+
+            mockAudioFileBLL.Setup(x => x.GetAudioFileById(requestedId))
+                .ReturnsAsync(mockResponse);
+
+
+            // Act
+            var result = await audioFileController.Get(REQUEST_HEADERS, requestedId);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.IsType<OkObjectResult>(result);
+        }
+
+        [Fact]
         public async Task Post_Returns_CreatedAtActionResult()
         {
             // Arrange

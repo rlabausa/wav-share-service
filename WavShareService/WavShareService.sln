@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WavShareServiceDAL", "WavSh
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WavShareServiceModels", "WavShareServiceModels\WavShareServiceModels.csproj", "{D7227CE6-6668-45DA-AD5C-1F2C61E99FAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WavShareUnitTest", "WavShareUnitTest\WavShareUnitTest.csproj", "{F262E265-3065-4171-9747-B81D38EB6813}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WavShareServiceUnitTests", "WavShareUnitTest\WavShareServiceUnitTests.csproj", "{F262E265-3065-4171-9747-B81D38EB6813}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -13,6 +13,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WavShareServiceModels", "Wa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WavShareServiceUnitTests", "WavShareUnitTest\WavShareServiceUnitTests.csproj", "{F262E265-3065-4171-9747-B81D38EB6813}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "WavShareServiceDb", "WavShareServiceDb\WavShareServiceDb.sqlproj", "{E5C35A87-CEB9-48C0-93E2-8FFF44952AF1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WavShareServiceDbUnitTests", "WavShareServiceDbUnitTests\WavShareServiceDbUnitTests.csproj", "{3B7B51C0-BD3F-4ADF-920A-278DEC1406E9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,16 @@ Global
 		{F262E265-3065-4171-9747-B81D38EB6813}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F262E265-3065-4171-9747-B81D38EB6813}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F262E265-3065-4171-9747-B81D38EB6813}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5C35A87-CEB9-48C0-93E2-8FFF44952AF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5C35A87-CEB9-48C0-93E2-8FFF44952AF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5C35A87-CEB9-48C0-93E2-8FFF44952AF1}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{E5C35A87-CEB9-48C0-93E2-8FFF44952AF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5C35A87-CEB9-48C0-93E2-8FFF44952AF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5C35A87-CEB9-48C0-93E2-8FFF44952AF1}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{3B7B51C0-BD3F-4ADF-920A-278DEC1406E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B7B51C0-BD3F-4ADF-920A-278DEC1406E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B7B51C0-BD3F-4ADF-920A-278DEC1406E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B7B51C0-BD3F-4ADF-920A-278DEC1406E9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

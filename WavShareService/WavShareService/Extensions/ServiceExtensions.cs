@@ -1,4 +1,7 @@
-﻿using WavShareServiceBLL;
+﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
+using System.Diagnostics;
+using WavShareService.Health;
+using WavShareServiceBLL;
 using WavShareServiceDAL;
 using WavShareServiceModels.ApiResponses;
 
@@ -69,6 +72,26 @@ namespace WavShareService.Extensions
         }
 
         /// <summary>
+        /// Add required health check configurations for the application.
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="configuration"></param>
+        /// <returns><see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
+        public static IServiceCollection AddConfiguredHealthChecks(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddHealthChecks()
+                    .AddCheck(
+                        "WavShareServiceDb-Check",
+                        new WavShareDbHealthCheck(configuration.GetConnectionString("WavShareDB")),
+                        HealthStatus.Unhealthy,
+                        new string[] { "wavshareservicedb" }
+                    );
+
+            return services;
+        }
+
+
+        /// <summary>
         /// Add all required transient services for the application.
         /// </summary>
         /// <param name="services"></param>
@@ -93,5 +116,6 @@ namespace WavShareService.Extensions
             //TODO: Implement Singleton Services 
             throw new NotImplementedException();
         }
+
     }
 }

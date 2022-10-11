@@ -1,17 +1,11 @@
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using WavShareService.Extensions;
-using WavShareService.HealthCheck;
+using WavShareService.Health;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddHealthChecks()
-    .AddCheck(
-        "WavShareServiceDb-Check", 
-        new WavShareDbHealthCheck(builder.Configuration.GetConnectionString("WavShareDb")),
-        HealthStatus.Unhealthy,
-        new string[] { "wavshareservicedb" }
-        );
+builder.Services.AddConfiguredHealthChecks(builder.Configuration);
 builder.Services.AddConfiguredLogging(builder.Configuration);
 builder.Services.AddConfiguredRouting();
 builder.Services.AddConfiguredControllers();

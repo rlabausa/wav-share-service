@@ -2,7 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 
-namespace WavShareService.HealthCheck
+namespace WavShareService.Health
 {
     /// <summary>
     /// Health check for WavShareService database.
@@ -29,12 +29,13 @@ namespace WavShareService.HealthCheck
                 {
                     await conn.OpenAsync(cancellationToken);
 
-                    using (var cmd = new SqlCommand())
+                    using (var cmd = conn.CreateCommand())
                     {
+                        cmd.Connection = conn;
                         cmd.CommandType = CommandType.Text;
                         cmd.CommandText = _SQL_QUERY;
 
-                        await cmd.ExecuteScalarAsync(cancellationToken);
+                        await cmd.ExecuteNonQueryAsync(cancellationToken);
                     }
                 }
             } catch (Exception exc)

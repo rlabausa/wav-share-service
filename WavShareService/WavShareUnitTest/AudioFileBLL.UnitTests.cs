@@ -52,7 +52,7 @@ namespace WavShareUnitTest
         {
             var mockLogger = new Mock<ILogger<AudioFileBLL>>();
             var mockAudioFileAdapter = new Mock<IAudioFileAdapter>();
-            var audioFileDAL =  new AudioFileBLL(mockAudioFileAdapter.Object);
+            var audioFileBLL =  new AudioFileBLL(mockAudioFileAdapter.Object);
 
             var mockRequest = 1;
             var mockResponse = new AudioFile(1, "hello.wav", "aGVsbG8gd29ybGQ=", "ruby", DateTime.Now);
@@ -61,7 +61,7 @@ namespace WavShareUnitTest
                 .Setup(x => x.GetAudioFileById(mockRequest))
                 .ReturnsAsync(mockResponse);
 
-            var result = await audioFileDAL.GetAudioFileById(mockRequest);
+            var result = await audioFileBLL.GetAudioFileById(mockRequest);
             
             Assert.NotNull(result);
             Assert.IsType<AudioFile>(result);

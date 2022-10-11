@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHealthChecks()
     .AddCheck(
         "WavShareServiceDb-Check", 
-        new WavShareDbHealthCheck(builder.Configuration.GetConnectionString("WavShareDbFake")),
+        new WavShareDbHealthCheck(builder.Configuration.GetConnectionString("WavShareDb")),
         HealthStatus.Unhealthy,
         new string[] { "wavshareservicedb" }
         );

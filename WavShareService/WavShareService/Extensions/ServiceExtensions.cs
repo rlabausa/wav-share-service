@@ -81,10 +81,10 @@ namespace WavShareService.Extensions
         {
             services.AddHealthChecks()
                     .AddCheck(
-                        "WavShareServiceDb-Check",
+                        "WavShareDB",
                         new WavShareDbHealthCheck(configuration.GetConnectionString("WavShareDB")),
                         HealthStatus.Unhealthy,
-                        new string[] { "wavshareservicedb" }
+                        new string[] { "db", "sqlserver" }
                     );
 
             return services;

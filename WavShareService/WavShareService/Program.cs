@@ -1,17 +1,18 @@
-using Microsoft.Extensions.Diagnostics.HealthChecks;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using WavShareService.Extensions;
-using WavShareService.Health;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddConfiguredHealthChecks(builder.Configuration);
 builder.Services.AddConfiguredLogging(builder.Configuration);
 builder.Services.AddConfiguredRouting();
 builder.Services.AddConfiguredControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddConfiguredSwaggerGen();
 builder.Services.AddTransientServices();
+builder.Services.AddConfiguredHealthChecks(builder.Configuration);
+builder.Services.AddHealthChecksUI().AddInMemoryStorage();
 
 var app = builder.Build();
 
@@ -30,8 +31,16 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
+app.MapControllers();
+
 app.MapHealthChecks("/health");
 
-app.MapControllers();
+app.MapHealthChecks("/health-ui", new HealthCheckOptions()
+{
+    Predicate = _ => true,
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
+
+app.MapHealthChecksUI();
 
 app.Run();
